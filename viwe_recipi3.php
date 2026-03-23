@@ -1,4 +1,6 @@
-<?php $id = intval($_GET['id']); ?>
+<?php
+$id = intval($_GET['id']);
+?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -610,7 +612,7 @@
   .btn-cancel:hover { background: rgba(255,255,255,0.14); }
   .btn-danger { background: var(--danger); color: #fff; }
   .btn-danger:hover { background: #c0392b; }
-  
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .page-wrap { grid-template-columns: 1fr; }
@@ -652,11 +654,11 @@
 <header>
   <a class="logo" href="#">Flavor<span>Verse</span></a>
   <div class="header-meta">
-    
+    <span>Italian</span>
     <span class="dot">✦</span>
-   
+    <span>Pasta</span>
     <span class="dot">✦</span>
-   
+    <span>Classic</span>
   </div>
 </header>
 
@@ -672,11 +674,11 @@
     <span class="hero-tag">⭐ Editor's Pick</span>
     <h1>Spaghetti <em>Bolognese</em></h1>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-icon">⏱</span><span><strong></strong> Prep</span></div>
-      <div class="stat"><span class="stat-icon">🔥</span><span><strong></strong> Cook</span></div>
-      <div class="stat"><span class="stat-icon">🍽</span><span><strong></strong> Servings</span></div>
-      <div class="stat"><span class="stat-icon">📊</span><span><strong></strong> Level</span></div>
-      <div class="stat"><span class="stat-icon">🌍</span><span><strong></strong> Cuisine</span></div>
+      <div class="stat"><span class="stat-icon">⏱</span><span><strong>35 min</strong> Prep</span></div>
+      <div class="stat"><span class="stat-icon">🔥</span><span><strong>45 min</strong> Cook</span></div>
+      <div class="stat"><span class="stat-icon">🍽</span><span><strong>4</strong> Servings</span></div>
+      <div class="stat"><span class="stat-icon">📊</span><span><strong>Intermediate</strong> Level</span></div>
+      <div class="stat"><span class="stat-icon">🌍</span><span><strong>Italian</strong> Cuisine</span></div>
     </div>
   </div>
 </section>
@@ -725,7 +727,7 @@
         <div class="section-icon">🧾</div>
         <h2>Ingredients</h2>
       </div>
-      <div class="card-body" style="display:flex;flex-direction: column; margin-top: 22vh;">
+      <div class="card-body">
         <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:16px;">Hover over any ingredient for detailed nutritional info.</p>
         <div class="ingredients-grid" id="ingredientsGrid"></div>
       </div>
@@ -789,8 +791,13 @@
         <h2>Nutrition (per serving)</h2>
       </div>
       <div class="card-body">
-        <div class="nutrition-grid" id="nutrition-grid">
-         
+        <div class="nutrition-grid">
+          <div class="nut-box"><div class="nut-val">620</div><div class="nut-label">Calories</div></div>
+          <div class="nut-box"><div class="nut-val">38g</div><div class="nut-label">Protein</div></div>
+          <div class="nut-box"><div class="nut-val">72g</div><div class="nut-label">Carbs</div></div>
+          <div class="nut-box"><div class="nut-val">18g</div><div class="nut-label">Fat</div></div>
+          <div class="nut-box"><div class="nut-val">6g</div><div class="nut-label">Fiber</div></div>
+          <div class="nut-box"><div class="nut-val">810mg</div><div class="nut-label">Sodium</div></div>
         </div>
       </div>
     </div>
@@ -859,107 +866,116 @@
 </div>
 
 <script>
-
-
-
-/* new*/ 
-function loadRecipe() {
-   var ingredients = [];
-   var steps = [];
-   var total=
-    {
-        cal: 0,
-        carbs :0 ,
-        protein :0,
-        fat : 0,
-
-    }
-;
-
-    var id = 23;
-
-    var id_num = "<?php echo $id; ?>";
-
-    fetch(`view.php?id=20`)
-        .then(response => response.json())
-        .then(recipe => {
-              console.log(recipe);
-             recipe.forEach((item) => {
-              total.cal+=parseFloat(item.calories);
-              total.carbs+=parseFloat(item.carbohydrates);
-              total.fat+=parseFloat(item.fat);
-              total.protein+=parseFloat(item.protein);
-              steps[0]=item.cooking_step;
-               ingredients.push({
-              name: item.ingredient_name,
-              qty: item.quantity + item.unit,   // e.g. 200g
-              unit: item.unit,
-              cal: parseFloat(item.calories),
-              protein: item.protein ,
-              carbs: item.carbohydrates ,
-              fat: item.fat ,
-            desc: item.description // or customize
-    });
-            });
-
-            renderINGREDIENTS(ingredients);
-           
-            RENDERSTEPS(steps);
-            rendertotal(total);
-            console.log("render");
-            console.log(ingredients[0]); // ✅ moved inside
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
-
-  
-  
-
-}  
-                
-        
-loadRecipe();
-
-
-
-/* for image rendering */
-
-
-async function getImageUrl(name) {
-    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(name)}%20Sri%20Lanka&per_page=5&client_id=7IumigsVYsLtzTgrTULz0clj5Yv_YlYE1xydk48TaUM`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        // Return the first image URL
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        } else {
-            return ""; // Return empty string if no image found
-        }
-    } catch (err) {
-        console.error("Error fetching image:", err);
-        return "";
-    }
-}
-
-
-
 /* ── DATA ── */
+const ingredients = [
+  {
+    name: "Spaghetti",   qty: "400g",   unit: "grams",
+    cal: 351, protein: "12.5g", carbs: "70g", fat: "1.5g",
+    desc: "Use bronze-die spaghetti for better sauce adhesion."
+  },
+  {
+    name: "Ground Beef", qty: "500g",   unit: "grams",
+    cal: 250, protein: "26g", carbs: "0g", fat: "17g",
+    desc: "Choose 80/20 lean-to-fat ratio for juicy, rich sauce."
+  },
+  {
+    name: "Tomatoes",    qty: "400g",   unit: "can",
+    cal: 35,  protein: "1.7g", carbs: "7g", fat: "0.3g",
+    desc: "San Marzano whole peeled tomatoes are the gold standard."
+  },
+  {
+    name: "Onion",       qty: "1 large", unit: "piece",
+    cal: 44,  protein: "1.2g", carbs: "10g", fat: "0.1g",
+    desc: "Soften slowly until translucent for natural sweetness."
+  },
+  {
+    name: "Garlic",      qty: "4 cloves", unit: "pieces",
+    cal: 4,   protein: "0.2g", carbs: "1g", fat: "0g",
+    desc: "Mince finely — whole cloves leave harsh bitter notes."
+  },
+  {
+    name: "Carrots",     qty: "2 medium", unit: "pieces",
+    cal: 41,  protein: "0.9g", carbs: "10g", fat: "0.2g",
+    desc: "Part of the classic soffritto — adds subtle sweetness."
+  },
+  {
+    name: "Celery",      qty: "2 stalks", unit: "pieces",
+    cal: 10,  protein: "0.7g", carbs: "2g", fat: "0.1g",
+    desc: "Completes the holy trinity of Italian aromatics."
+  },
+  {
+    name: "Red Wine",    qty: "150ml",  unit: "ml",
+    cal: 125, protein: "0g", carbs: "4g", fat: "0g",
+    desc: "Use a wine you'd drink — it defines the sauce's backbone."
+  },
+  {
+    name: "Tomato Paste", qty: "2 tbsp", unit: "tbsp",
+    cal: 52,  protein: "2g", carbs: "11g", fat: "0.4g",
+    desc: "Cook out in the pan briefly to remove raw edge."
+  },
+  {
+    name: "Olive Oil",   qty: "3 tbsp", unit: "tbsp",
+    cal: 119, protein: "0g", carbs: "0g", fat: "14g",
+    desc: "Extra-virgin for sautéing the soffritto at the start."
+  },
+  {
+    name: "Parmesan",    qty: "60g",    unit: "grams",
+    cal: 431, protein: "38g", carbs: "3g", fat: "29g",
+    desc: "Parmigiano-Reggiano only — freshly grated at the table."
+  },
+  {
+    name: "Bay Leaves",  qty: "2",      unit: "pieces",
+    cal: 3,   protein: "0.1g", carbs: "0.5g", fat: "0g",
+    desc: "Remove before serving — they add fragrance, not texture."
+  },
+];
 
-
-const steps = []
+const steps = [
+  {
+    title: "Build the Soffritto",
+    text: "Heat olive oil in a heavy-bottomed Dutch oven over medium-low. Finely dice onion, carrot, and celery. Sweat gently for 10–12 minutes, stirring occasionally, until completely soft and golden — never brown.",
+    time: "12 min"
+  },
+  {
+    title: "Add Garlic & Paste",
+    text: "Push the vegetables to one side. Add minced garlic and tomato paste to the cleared space. Cook for 2 minutes, stirring constantly, until the paste darkens slightly and smells sweet and caramelized.",
+    time: "2 min"
+  },
+  {
+    title: "Brown the Meat",
+    text: "Raise heat to medium-high. Crumble in ground beef and cook undisturbed for 3 minutes before breaking up — this develops a proper Maillard crust. Season generously with salt and black pepper.",
+    time: "8 min"
+  },
+  {
+    title: "Deglaze with Wine",
+    text: "Pour in the red wine, scraping up all the fond from the bottom. Let it bubble vigorously until the alcohol smell dissipates and the liquid reduces by half — about 3 minutes.",
+    time: "3 min"
+  },
+  {
+    title: "Slow Simmer the Sauce",
+    text: "Add crushed tomatoes and bay leaves. Reduce heat to the lowest possible setting, partially cover, and simmer for 30–45 minutes. Stir every 10 minutes. The sauce should barely blip — low and slow is the secret.",
+    time: "45 min"
+  },
+  {
+    title: "Cook the Pasta",
+    text: "Bring a large pot of generously salted water to a rolling boil. Cook spaghetti 1 minute less than the package instructions — it will finish in the sauce. Reserve 1 cup of starchy pasta water before draining.",
+    time: "9 min"
+  },
+  {
+    title: "Marry Pasta & Sauce",
+    text: "Add the drained spaghetti directly into the bolognese. Toss vigorously over medium heat for 90 seconds, adding pasta water a splash at a time until each strand is glossy and sauce-coated.",
+    time: "2 min"
+  },
+  {
+    title: "Plate & Serve",
+    text: "Twirl portions into warmed bowls using tongs. Finish with a blizzard of freshly grated Parmigiano-Reggiano, a drizzle of extra-virgin olive oil, and cracked black pepper. Serve immediately.",
+    time: "2 min"
+  },
+];
 
 /* ── RENDER INGREDIENTS ── */
-
-
-function  renderINGREDIENTS(ingredientsall){
-  console.log('data');
-  console.log(ingredientsall);
-  const grid = document.getElementById('ingredientsGrid');
-ingredientsall.forEach(ing => {
+const grid = document.getElementById('ingredientsGrid');
+ingredients.forEach(ing => {
   const chip = document.createElement('div');
   chip.className = 'ingredient-chip';
   chip.setAttribute('tabindex', '0');
@@ -977,50 +993,21 @@ ingredientsall.forEach(ing => {
     </div>`;
   grid.appendChild(chip);
 });
-const imgElement = document.getElementById("mainHeroImg")
-    
-    const imgUrl = getImageUrl(ing.r_name);
-    ing.image = imgUrl; // store image in your object
-
-}
-
-
-function rendertotal(total){
-
-  const grid1 = document.getElementById('nutrition-grid');
-  for (let key in total) {
-
-  const chip = document.createElement('div');
-  chip.className = 'nut-box';
-  chip.innerHTML = `
-     <div class="nut-val">${total[key].toFixed(2)}</div><div class="nut-label">${key}</div>`;
-  grid1.appendChild(chip);
-
-  }
-
-
-}
-
 
 /* ── RENDER STEPS ── */
-
-function RENDERSTEPS(steps){
-  const list = document.getElementById('stepsList');
+const list = document.getElementById('stepsList');
 steps.forEach((step, i) => {
   const li = document.createElement('li');
   li.className = 'step-item';
   li.innerHTML = `
     <div class="step-num">${i + 1}</div>
     <div class="step-content">
-      
-      <p>${step}</p>
-      <span class="step-time">⏱"not sat"</span>
+      <h3>${step.title}</h3>
+      <p>${step.text}</p>
+      <span class="step-time">⏱ ${step.time}</span>
     </div>`;
   list.appendChild(li);
 });
-
-}
-
 
 /* ── FAB ── */
 let fabOpen = false;

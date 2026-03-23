@@ -99,7 +99,7 @@
 
     .rc-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;}
     .rc-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--text-primary);line-height:1.3;}
-    .rc-desc{font-size:.78rem;color:var(--text-secondary);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;margin-bottom:10px;}
+    .rc-desc{font-size:.78rem;color:var(--text-secondary);line-height:1.6;display:-webkit-box; -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;margin-bottom:10px;}
 
     .nutrition-strip{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
     .npill{font-size:.62rem;padding:3px 8px;border-radius:20px;font-weight:600;}

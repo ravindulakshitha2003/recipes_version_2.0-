@@ -9,25 +9,18 @@ $id = intval($_GET['id']);
     r.description,
     r.cooking_step,
     r.r_picture,
-    r.rating,
-    r.user_no,
-    r.created_at,
+    r.rating AS recipe_rating,
 
-    i.ingredient_id,
-    i.ingredient_name,
-    i.quantity,
-    i.unit,
-    i.calories,
-    i.carbohydrates,
-    i.protein,
-    i.fat,
-    i.clarity
+    p.id AS user_id,
+    p.name AS chef_name,
+    p.status,
+    p.type
 
 FROM recipes r
-JOIN ingredients i 
-    ON r.recipi_id = i.recipe_id
+JOIN person p 
+    ON r.user_no = p.id
 
-WHERE r.recipi_id =$id;";
+WHERE r.recipi_id =1;";
  $result = $conn->query($sql); 
 
  $users = [];
