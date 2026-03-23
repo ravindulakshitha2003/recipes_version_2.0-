@@ -30,15 +30,16 @@
     /* ── Reset & Base ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body { width: 100%; height: 100%; }
-
     body {
       background: var(--primary-bg);
       color: var(--text-primary);
       font-family: 'DM Sans', sans-serif;
       font-weight: 400;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
 
       /* subtle grain overlay */
@@ -51,12 +52,12 @@
     /* ── Layout Shell ──────────────────────────────────────── */
     .app-shell {
       width: 100%;
-      height: 100%;
-      flex: 1;
+      max-width: 780px;
+      height: 100vh;
+      max-height: 100vh;
       display: flex;
       flex-direction: column;
       padding: 0;
-      overflow: hidden;
     }
 
     /* ── Header ────────────────────────────────────────────── */
@@ -232,7 +233,7 @@
     /* ── Recipe Cards ──────────────────────────────────────── */
     .recipe-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
       gap: 14px;
       width: 100%;
       margin-top: 4px;
@@ -247,375 +248,54 @@
       cursor: pointer;
       box-shadow: var(--shadow-sm);
       animation: slide-in .35s cubic-bezier(.22,1,.36,1) both;
-      display: flex;
-      flex-direction: column;
     }
 
     .recipe-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,123,44,.4);
-      box-shadow: 0 18px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(255,123,44,.25);
+      transform: translateY(-4px);
+      border-color: rgba(255,123,44,.35);
+      box-shadow: 0 16px 36px rgba(0,0,0,.5), 0 0 0 1px rgba(255,123,44,.2);
     }
 
-    .recipe-card-img-wrap {
-      position: relative;
-      height: 140px;
-      overflow: hidden;
-      background: #1a1a1a;
-      flex-shrink: 0;
-    }
-
-    .recipe-card-img-wrap img {
+    .recipe-card img {
       width: 100%;
-      height: 100%;
+      height: 130px;
       object-fit: cover;
       display: block;
-      transition: transform .4s ease;
+      background: #1a1a1a;
     }
 
-    .recipe-card:hover .recipe-card-img-wrap img {
-      transform: scale(1.06);
-    }
-
-    .recipe-card-img-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      background: linear-gradient(135deg, #1a1a1a, #222);
-    }
-
-    .recipe-card-category-badge {
-      position: absolute;
-      top: 9px;
-      left: 9px;
-      font-size: .63rem;
-      font-weight: 500;
-      color: #fff;
-      background: rgba(255,123,44,.9);
-      padding: 3px 9px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      backdrop-filter: blur(4px);
-    }
-
-    .recipe-card-body {
-      padding: 13px 15px 15px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+    .recipe-card-body { padding: 12px 14px 14px; }
 
     .recipe-card-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1rem;
+      font-size: .95rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       color: var(--text-primary);
-      line-height: 1.3;
     }
 
     .recipe-card-desc {
       font-size: .78rem;
       color: var(--text-secondary);
-      line-height: 1.55;
+      line-height: 1.5;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      flex: 1;
     }
 
-    .recipe-card-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 11px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .recipe-card-ing-count {
-      font-size: .72rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .recipe-card-view-btn {
-      font-size: .72rem;
+    .recipe-card-tag {
+      display: inline-block;
+      margin-top: 9px;
+      font-size: .67rem;
       font-weight: 500;
       color: var(--accent);
       background: var(--accent-dim);
       border: 1px solid rgba(255,123,44,.2);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 20px;
-      cursor: pointer;
-      transition: var(--transition);
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .recipe-card-view-btn:hover {
-      background: rgba(255,123,44,.22);
-      border-color: rgba(255,123,44,.45);
-    }
-
-    /* ── Nutrition pills strip ─────────────────────────────── */
-    .nutrition-strip {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .nutrition-pill {
-      font-size: .65rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 500;
-      letter-spacing: .03em;
-    }
-
-    .pill-cal  { background: rgba(255,123,44,.15); color: #ff9a5c; border: 1px solid rgba(255,123,44,.25); }
-    .pill-prot { background: rgba(74,222,128,.1);  color: #4ade80; border: 1px solid rgba(74,222,128,.2); }
-    .pill-carb { background: rgba(96,165,250,.1);  color: #60a5fa; border: 1px solid rgba(96,165,250,.2); }
-    .pill-fat  { background: rgba(250,204,21,.1);  color: #facc15; border: 1px solid rgba(250,204,21,.2); }
-
-    /* ── Recipe Detail Modal ───────────────────────────────── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(6px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      animation: fade-in .2s ease both;
-    }
-
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    .modal-box {
-      background: var(--secondary-bg);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 18px;
-      width: 100%;
-      max-width: 640px;
-      max-height: 88vh;
-      overflow-y: auto;
-      box-shadow: 0 32px 80px rgba(0,0,0,.7);
-      animation: modal-up .3s cubic-bezier(.22,1,.36,1) both;
-    }
-
-    @keyframes modal-up {
-      from { opacity: 0; transform: translateY(30px) scale(.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .modal-box::-webkit-scrollbar { width: 4px; }
-    .modal-box::-webkit-scrollbar-thumb { background: rgba(255,123,44,.3); border-radius: 4px; }
-
-    .modal-hero {
-      position: relative;
-      height: 200px;
-      overflow: hidden;
-      border-radius: 18px 18px 0 0;
-      background: #1a1a1a;
-    }
-
-    .modal-hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .modal-hero-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 56px;
-      background: linear-gradient(135deg, #1a1a1a, #222);
-    }
-
-    .modal-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(30,30,30,.9) 0%, transparent 55%);
-    }
-
-    .modal-hero-title {
-      position: absolute;
-      bottom: 16px;
-      left: 20px;
-      right: 52px;
-    }
-
-    .modal-hero-title h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      line-height: 1.25;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,.5);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(0,0,0,.5);
-      backdrop-filter: blur(4px);
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      line-height: 1;
-    }
-
-    .modal-close:hover { background: rgba(255,123,44,.7); }
-
-    .modal-body { padding: 20px 22px 26px; }
-
-    .modal-section-title {
-      font-size: .7rem;
-      font-weight: 500;
-      color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: .1em;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .modal-section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border-subtle);
-    }
-
-    .modal-desc {
-      font-size: .875rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
-
-    /* Cooking steps */
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .step-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .step-num {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--accent-dim);
-      border: 1px solid rgba(255,123,44,.3);
-      color: var(--accent);
-      font-size: .75rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .step-text {
-      font-size: .85rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      padding-top: 3px;
-    }
-
-    /* Ingredients table */
-    .ing-table-wrap {
-      overflow-x: auto;
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .ing-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .78rem;
-    }
-
-    .ing-table thead tr {
-      background: rgba(255,123,44,.08);
-      border-bottom: 1px solid rgba(255,123,44,.15);
-    }
-
-    .ing-table th {
-      padding: 9px 12px;
-      text-align: left;
-      color: var(--accent);
-      font-weight: 500;
-      font-size: .7rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      white-space: nowrap;
-    }
-
-    .ing-table td {
-      padding: 9px 12px;
-      color: var(--text-secondary);
-      border-bottom: 1px solid var(--border-subtle);
-      vertical-align: top;
-    }
-
-    .ing-table tbody tr:last-child td { border-bottom: none; }
-
-    .ing-table tbody tr:hover td { background: rgba(255,255,255,.025); }
-
-    .ing-name-cell {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    .ing-clarity {
-      font-size: .7rem;
-      color: var(--text-secondary);
-      opacity: .7;
-      margin-top: 2px;
-    }
-
-    .macro-badge {
-      display: inline-block;
-      padding: 1px 6px;
-      border-radius: 6px;
-      font-size: .68rem;
-      font-weight: 600;
+      letter-spacing: .05em;
     }
 
     /* ── Typing Indicator ──────────────────────────────────── */
@@ -858,18 +538,6 @@
       </div>
     </div>
     <div class="header-badge">Culinary AI</div>
-    <span id="demo-pill" style="
-      background: rgba(74,222,128,.12);
-      border: 1px solid rgba(74,222,128,.25);
-      color: #4ade80;
-      font-size: .65rem;
-      font-weight: 500;
-      padding: 3px 9px;
-      border-radius: 20px;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      margin-left: 4px;
-    ">Demo Mode</span>
   </header>
 
   <!-- ── Messages ── -->
@@ -881,10 +549,10 @@
       <h2>Your personal <em>culinary guide</em></h2>
       <p>Ask me for recipes, meal ideas, ingredient substitutions, or cooking techniques — I'm here to inspire your kitchen.</p>
       <div class="suggestions">
-        <button class="suggestion-chip" onclick="fillSuggestion(this)">🍳 Show me a fried rice recipe</button>
-        <button class="suggestion-chip" onclick="fillSuggestion(this)">🍝 Classic pasta dish ideas</button>
-        <button class="suggestion-chip" onclick="fillSuggestion(this)">🌱 Vegan dinner recipes</button>
-        <button class="suggestion-chip" onclick="fillSuggestion(this)">🍗 Easy chicken meal</button>
+        <button class="suggestion-chip" onclick="fillSuggestion(this)">🥑 Quick avocado recipes</button>
+        <button class="suggestion-chip" onclick="fillSuggestion(this)">🍝 Classic pasta dishes</button>
+        <button class="suggestion-chip" onclick="fillSuggestion(this)">🌱 Vegan dinner ideas</button>
+        <button class="suggestion-chip" onclick="fillSuggestion(this)">🍰 Easy desserts</button>
       </div>
     </div>
 
@@ -929,7 +597,7 @@
 ══════════════════════════════════════════════════════════ -->
 <script>
 /* ── Config ──────────────────────────────────────────────── */
-const API_URL = 'https://example.com/api/chat';
+const API_URL = 'https://gimini2api-production-8475.up.railway.app/chat';
 const API_KEY = 'example_api_key';
 
 /* ── DOM Refs ────────────────────────────────────────────── */
@@ -999,31 +667,8 @@ async function handleSend() {
   }
 }
 
-/* ── Mock recipe data (Classic Fried Rice demo) ─────────── */
-const MOCK_RECIPE_RESPONSE = {"recipes":[{"r_name":"Classic Fried Rice","category":"Main Course","description":"A quick and delicious homemade version of the popular Asian takeout dish, featuring day-old rice, scrambled eggs, mixed vegetables, and savory seasonings.","cooking_step":"1. In a large wok or skillet, heat 1 tablespoon of vegetable oil over medium-high heat. Add the beaten eggs and scramble them until cooked through. Remove the eggs from the wok and set aside. 2. Add the remaining 1 tablespoon of vegetable oil to the wok. Add the minced garlic and diced onion and stir-fry for 1-2 minutes until fragrant. 3. Add the thawed mixed vegetables (peas and carrots) and stir-fry for 3-4 minutes until tender-crisp. 4. Add the day-old cooked rice to the wok, breaking up any clumps with your spatula. Stir-fry for 5-7 minutes, pressing the rice against the hot surface, until the rice is heated through and slightly toasted. 5. Return the scrambled eggs to the wok. Pour in the soy sauce and sesame oil. Stir-fry everything together for another 2-3 minutes, ensuring all ingredients are well combined and coated with the sauce. 6. Taste and adjust seasoning if needed. Garnish with chopped green onions before serving immediately.","r_picture":"https://www.allrecipes.com/thmb/0mNlW5_F9M2_J_g_q_E_q_C_Q_g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/812543-easy-fried-rice-ddmfs-3x4-0820-22c7a3648dd14205a2e519283733c7c2.jpg","ingredients":[{"ingredient_name":"Cooked Day-old Rice","quantity":300,"unit":"g","calories":390,"carbohydrates":84,"protein":8,"fat":1,"clarity":"Preferably cold, day-old white rice for best texture."},{"ingredient_name":"Large Eggs","quantity":2,"unit":"pieces","calories":155,"carbohydrates":1,"protein":13,"fat":11,"clarity":"Lightly beaten."},{"ingredient_name":"Vegetable Oil","quantity":30,"unit":"ml","calories":240,"carbohydrates":0,"protein":0,"fat":28,"clarity":"For stir-frying."},{"ingredient_name":"Garlic","quantity":10,"unit":"g","calories":15,"carbohydrates":3,"protein":0.5,"fat":0,"clarity":"Minced."},{"ingredient_name":"Yellow Onion","quantity":75,"unit":"g","calories":30,"carbohydrates":7,"protein":1,"fat":0,"clarity":"Finely diced."},{"ingredient_name":"Frozen Mixed Vegetables","quantity":150,"unit":"g","calories":100,"carbohydrates":20,"protein":4,"fat":0.5,"clarity":"Thawed (e.g., peas and carrots)."},{"ingredient_name":"Soy Sauce","quantity":30,"unit":"ml","calories":20,"carbohydrates":3,"protein":3,"fat":0,"clarity":"Low sodium preferred."},{"ingredient_name":"Toasted Sesame Oil","quantity":15,"unit":"ml","calories":120,"carbohydrates":0,"protein":0,"fat":14,"clarity":"For flavor."},{"ingredient_name":"Green Onions","quantity":20,"unit":"g","calories":6,"carbohydrates":1,"protein":0.5,"fat":0,"clarity":"Chopped, for garnish."}]}]};
-
-/* Keywords that trigger the mock recipe response in demo mode */
-const MOCK_TRIGGERS = ['fried rice','recipe','rice','cook','food','meal','dish','ingredient','pasta','chicken','vegan','dessert','avocado'];
-
-/* ── API call (mock-aware) ───────────────────────────────── */
+/* ── API call ────────────────────────────────────────────── */
 async function callChatAPI(message) {
-  // Demo mode: if the message matches a food keyword, return the mock recipe
-  const lower = message.toLowerCase();
-  const isFoodQuery = MOCK_TRIGGERS.some(k => lower.includes(k));
-
-  if (isFoodQuery) {
-    // Simulate realistic network latency
-    await delay(1200 + Math.random() * 600);
-    return MOCK_RECIPE_RESPONSE;
-  }
-
-  // Non-food queries: return a friendly text response (mock)
-  await delay(900 + Math.random() * 400);
-  return {
-    reply: "I'm your culinary AI! Ask me about recipes, ingredients, cooking techniques, or meal ideas and I'll whip something up for you. 🍳"
-  };
-
-  /* ── PRODUCTION: uncomment below and remove the mock blocks above ──
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -1032,43 +677,23 @@ async function callChatAPI(message) {
     },
     body: JSON.stringify({ message })
   });
+
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
-  ── */
 }
-
-/* Simple promise-based delay helper */
-const delay = ms => new Promise(res => setTimeout(res, ms));
 
 /* ── Response router ─────────────────────────────────────── */
 function handleAPIResponse(data) {
-  // Step 1: if data is a string, try to parse it as JSON
-  if (typeof data === 'string') {
-    try {
-      data = JSON.parse(data);
-    } catch (_) {
-      // Not JSON — just display as text
-      appendBotMessage(data || "I didn't quite get that — could you try again?");
-      return;
-    }
-  }
-
-  // Step 2: check for our specific recipe schema { recipes: [...] }
-  if (data && Array.isArray(data.recipes) && data.recipes.length > 0) {
-    appendRecipeCards(data.recipes);
-    return;
-  }
-
-  // Step 3: fall back to generic array detection anywhere in the object
+  // If the response (or a nested field) is an array → recipe cards
   const arr = extractArray(data);
+
   if (arr) {
     appendRecipeCards(arr);
-    return;
+  } else {
+    // Treat as plain text response
+    const text = extractText(data);
+    appendBotMessage(text || "I didn't quite get that — could you try again?");
   }
-
-  // Step 4: plain text response
-  const text = extractText(data);
-  appendBotMessage(text || "I didn't quite get that — could you try again?");
 }
 
 /* Recursively find the first array in the response object */
@@ -1137,11 +762,11 @@ function appendRecipeCards(items) {
   col.style.flex = '1';
   col.style.minWidth = '0';
 
-  // Intro bubble
+  // Optional intro line
   const intro = document.createElement('div');
   intro.className = 'bubble';
-  intro.style.marginBottom = '14px';
-  intro.textContent = `Here ${items.length === 1 ? 'is' : 'are'} ${items.length} recipe${items.length > 1 ? 's' : ''} for you — tap a card to see the full details:`;
+  intro.style.marginBottom = '12px';
+  intro.textContent = `Here are ${items.length} recipe${items.length > 1 ? 's' : ''} for you:`;
   col.appendChild(intro);
 
   const grid = document.createElement('div');
@@ -1163,183 +788,31 @@ function appendRecipeCards(items) {
   scrollBottom();
 }
 
-/* ── Build a single recipe card (supports both schema styles) ── */
+/* Build a single recipe card */
 function buildRecipeCard(item, index) {
-  // Normalise field names — support r_name / name / title etc.
-  const name  = item.r_name      ?? item.name        ?? item.title       ?? 'Untitled Recipe';
-  const desc  = item.description ?? item.summary     ?? item.desc        ?? '';
-  const image = item.r_picture   ?? item.image       ?? item.thumbnail   ?? item.img ?? '';
-  const cat   = item.category    ?? item.cuisine     ?? item.type        ?? 'Recipe';
-  const steps = item.cooking_step ?? item.steps      ?? item.instructions ?? '';
-  const ings  = Array.isArray(item.ingredients) ? item.ingredients : [];
-
-  // Aggregate nutrition from all ingredients (if available)
-  const totals = ings.reduce((acc, ing) => {
-    acc.cal  += Number(ing.calories      ?? 0);
-    acc.prot += Number(ing.protein       ?? 0);
-    acc.carb += Number(ing.carbohydrates ?? 0);
-    acc.fat  += Number(ing.fat           ?? 0);
-    return acc;
-  }, { cal: 0, prot: 0, carb: 0, fat: 0 });
-
   const card = document.createElement('div');
   card.className = 'recipe-card';
   card.style.animationDelay = `${index * 0.07}s`;
 
+  const name  = item.name  ?? item.title       ?? 'Untitled Recipe';
+  const desc  = item.description ?? item.summary ?? item.desc ?? '';
+  const image = item.image ?? item.thumbnail    ?? item.img   ?? '';
+  const tag   = item.category ?? item.cuisine   ?? item.type  ?? 'Recipe';
+
   card.innerHTML = `
-    <div class="recipe-card-img-wrap">
-      ${image
-        ? `<img src="${escHtml(image)}" alt="${escHtml(name)}" loading="lazy"
-               onerror="this.parentNode.innerHTML='<div class=\\'recipe-card-img-placeholder\\'>🍽️</div>'">`
-        : `<div class="recipe-card-img-placeholder">🍽️</div>`
-      }
-      <span class="recipe-card-category-badge">${escHtml(cat)}</span>
-    </div>
+    ${image
+      ? `<img src="${escHtml(image)}" alt="${escHtml(name)}" loading="lazy"
+             onerror="this.style.display='none'">`
+      : `<div style="height:80px;background:#1a1a1a;display:flex;align-items:center;
+                     justify-content:center;font-size:32px">🍽️</div>`
+    }
     <div class="recipe-card-body">
       <div class="recipe-card-name">${escHtml(name)}</div>
       ${desc ? `<div class="recipe-card-desc">${escHtml(desc)}</div>` : ''}
-
-      ${ings.length > 0 && totals.cal > 0 ? `
-        <div class="nutrition-strip">
-          <span class="nutrition-pill pill-cal">🔥 ${Math.round(totals.cal)} kcal</span>
-          ${totals.prot > 0 ? `<span class="nutrition-pill pill-prot">💪 ${totals.prot.toFixed(1)}g protein</span>` : ''}
-          ${totals.carb > 0 ? `<span class="nutrition-pill pill-carb">🌾 ${totals.carb.toFixed(1)}g carbs</span>` : ''}
-          ${totals.fat  > 0 ? `<span class="nutrition-pill pill-fat">🧈 ${totals.fat.toFixed(1)}g fat</span>` : ''}
-        </div>` : ''
-      }
-
-      <div class="recipe-card-meta">
-        <span class="recipe-card-ing-count">
-          🥦 ${ings.length} ingredient${ings.length !== 1 ? 's' : ''}
-        </span>
-        <button class="recipe-card-view-btn">View Recipe →</button>
-      </div>
+      <span class="recipe-card-tag">${escHtml(tag)}</span>
     </div>`;
-
-  // Click handler — open the detail modal
-  card.querySelector('.recipe-card-view-btn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    openRecipeModal({ name, desc, image, cat, steps, ings });
-  });
-  card.addEventListener('click', () => {
-    openRecipeModal({ name, desc, image, cat, steps, ings });
-  });
 
   return card;
-}
-
-/* ── Recipe Detail Modal ──────────────────────────────────── */
-function openRecipeModal({ name, desc, image, cat, steps, ings }) {
-  // Parse cooking steps — split by ". " or newline into an array
-  const stepsArr = parseSteps(steps);
-
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-
-  overlay.innerHTML = `
-    <div class="modal-box">
-      <div class="modal-hero">
-        ${image
-          ? `<img src="${escHtml(image)}" alt="${escHtml(name)}"
-                  onerror="this.parentNode.innerHTML='<div class=\\'modal-hero-placeholder\\'>🍽️</div>'">`
-          : `<div class="modal-hero-placeholder">🍽️</div>`
-        }
-        <div class="modal-hero-overlay"></div>
-        <div class="modal-hero-title">
-          <span style="font-size:.65rem;font-weight:500;color:var(--accent);text-transform:uppercase;
-                       letter-spacing:.08em;display:block;margin-bottom:4px">${escHtml(cat)}</span>
-          <h2>${escHtml(name)}</h2>
-        </div>
-        <button class="modal-close" aria-label="Close">✕</button>
-      </div>
-
-      <div class="modal-body">
-
-        ${desc ? `
-          <p class="modal-section-title">About</p>
-          <p class="modal-desc">${escHtml(desc)}</p>
-        ` : ''}
-
-        ${stepsArr.length > 0 ? `
-          <p class="modal-section-title">Cooking Steps</p>
-          <div class="steps-list">
-            ${stepsArr.map((s, i) => `
-              <div class="step-item">
-                <div class="step-num">${i + 1}</div>
-                <div class="step-text">${escHtml(s)}</div>
-              </div>`).join('')}
-          </div>
-        ` : ''}
-
-        ${ings.length > 0 ? `
-          <p class="modal-section-title">Ingredients & Nutrition</p>
-          <div class="ing-table-wrap">
-            <table class="ing-table">
-              <thead>
-                <tr>
-                  <th>Ingredient</th>
-                  <th>Qty</th>
-                  <th>Cal</th>
-                  <th>Protein</th>
-                  <th>Carbs</th>
-                  <th>Fat</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${ings.map(ing => `
-                  <tr>
-                    <td class="ing-name-cell">
-                      ${escHtml(ing.ingredient_name ?? ing.name ?? '—')}
-                      ${ing.clarity ? `<div class="ing-clarity">${escHtml(ing.clarity)}</div>` : ''}
-                    </td>
-                    <td>${ing.quantity != null ? escHtml(String(ing.quantity)) : '—'}${ing.unit ? ' ' + escHtml(ing.unit) : ''}</td>
-                    <td><span class="macro-badge pill-cal">${ing.calories ?? '—'}</span></td>
-                    <td><span class="macro-badge pill-prot">${ing.protein ?? '—'}g</span></td>
-                    <td><span class="macro-badge pill-carb">${ing.carbohydrates ?? '—'}g</span></td>
-                    <td><span class="macro-badge pill-fat">${ing.fat ?? '—'}g</span></td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-        ` : ''}
-
-      </div>
-    </div>`;
-
-  // Close handlers
-  const closeModal = () => {
-    overlay.style.animation = 'fade-in .15s ease reverse both';
-    setTimeout(() => overlay.remove(), 150);
-  };
-
-  overlay.querySelector('.modal-close').addEventListener('click', closeModal);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', function escHandler(e) {
-    if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', escHandler); }
-  });
-
-  document.body.appendChild(overlay);
-}
-
-/* Split a cooking_step string into an array of clean sentences */
-function parseSteps(steps) {
-  if (!steps) return [];
-  if (Array.isArray(steps)) return steps.map(s => String(s).trim()).filter(Boolean);
-
-  const str = String(steps).trim();
-
-  // Case 1: numbered steps like "1. Do this. 2. Do that."
-  const numbered = str.split(/\s*\d+\.\s+/).map(s => s.trim()).filter(s => s.length > 2);
-  if (numbered.length > 1) return numbered;
-
-  // Case 2: newline-separated
-  const byLine = str.split(/\n+/).map(s => s.trim()).filter(s => s.length > 2);
-  if (byLine.length > 1) return byLine;
-
-  // Case 3: sentence-split fallback
-  return str.split(/\.\s+/).map(s => s.trim().replace(/\.$/, '')).filter(s => s.length > 2);
 }
 
 /* ── Typing text animation ───────────────────────────────── */
