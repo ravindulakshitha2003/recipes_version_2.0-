@@ -1,0 +1,351 @@
+/* CSS Variables for Dark Theme */
+:root {
+  --dark-bg: #121212;
+  --card-bg: #252525;
+  --accent: #ff7b2c;
+  --accent-hover: #ff7b2c;
+  --text-primary: #f5f5f5;
+  --text-secondary: #b0b0b0;
+  --success: #ff7b2c;
+  --transition: all 0.3s ease;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: var(--transition);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header and image */
+.recipe-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.recipe-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Recipe title and description */
+.recipe-title {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin: 20px 0 10px;
+  transition: var(--transition);
+}
+
+.recipe-description {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto 30px;
+  transition: var(--transition);
+}
+
+/* Content layout */
+.recipe-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .recipe-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card styling */
+.card {
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+  color: var(--accent);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+  transition: var(--transition);
+}
+
+/* Ingredients list */
+.ingredients-list {
+  list-style-type: none;
+}
+
+.ingredient-item {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.ingredient-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--accent);
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  width: 280px;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip h4 {
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.tooltip p {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.buy-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: var(--accent);
+  color: var(--dark-bg);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.buy-link:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Steps list */
+.steps-list {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
+.step-item {
+  margin-bottom: 15px;
+  padding-left: 10px;
+  color: var(--text-primary);
+}
+
+/* Video section */
+.video-section {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  margin-top: 20px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--card-bg);
+  border: none;
+  color: var(--text-primary);
+  padding: 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: var(--dark-bg);
+}
+
+/* Animation for tooltip appearance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltip.active {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Modal for ingredient details */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-modal:hover {
+  color: var(--accent);
+}
+
+.modal-links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-link {
+  display: flex;
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  text-decoration: none;
+  justify-content: space-between;
+  color: var(--text-primary);
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+
+.modal-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--accent);
+}
+#image-card {
+  background-image: url("");
+  background-size: cover;
+  background-position: center;
+  height: 20rem;
+}
+.card {
+  background-color: transparent;
+}
+.linkToBrand {
+  display: flex;
+  flex-direction: column;
+}
+.icon {
+  display: block;
+  height: 50px;
+  width: 50px;
+}
+
+@media (max-width: 480px) {
+    .tooltip {
+      
+      width: 240px;
+
+    }
+}

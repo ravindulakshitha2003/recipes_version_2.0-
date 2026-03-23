@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlavorVerse | Recipe Sharing</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="recipi copy.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="main-nav">
+        <div class="logo">
+          <i class="fas fa-utensils"></i>
+          <span>FlavorVerse</span>
+        </div>
+
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search-bar"
+            id="searchInput"
+            placeholder="Search for recipes..."
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <ol id="nav-list">
+          <li>
+            <button class="nav-btn"><a href="index.php">Home</a></button>
+          </li>
+          <li><button class="nav-btn">Categories</button></li>
+          <li>
+            <button class="nav-btn"><a href="p.php">Create</a></button>
+          </li>
+          <li>
+            <div class="user-section"><div class="profile-pic">JS</div></div>
+          </li>
+        </ol>
+        <div id="more-option"><h1>🈚</h1></div>
+      </div>
+    </nav>
+    <!-- aimation test bar  -->
+    <div class="main-container">
+      <div class="input-text">
+        <h2 class="montserrat gradient-text">
+          Every flavor has a story , find yours
+        </h2>
+      </div>
+      <div class="loader" id="loader">
+                    <div class="inner one"></div>
+                    <div class="inner two"></div>
+                    <div class="inner three"></div>
+            </div>
+    </div>
+    <div id="card-container" class="recipe-row">
+    
+    </div>
+   
+    <script>
+      function displayRecipes() {
+        fetch("get_all_recipi.php")
+          .then((response) => response.json()) // Convert JSON to JS array/object
+          .then((data) => {
+            recipesData = data; // Store data in JS array
+          
+            suggestion(); // Check in console
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+      }
+     displayRecipes();
+    
+   let start = 0;
+const perPage = 8;
+let loadingInProgress = false; // flag to prevent multiple calls
+
+const container = document.getElementById("card-container");
+
+function appendData(items) {
+    const cards = items.map((recipe) => {
+        return `
+            <div class="recipe-card">
+                <div class="card-img">
+                    <img src="${recipe.r_picture}" alt="${recipe.r_name}">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${recipe.r_name}</h3>
+                    <p class="card-desc">${recipe.description}</p>
+                    <a href="view.php?id={recipe.recipi_id}" class="see-more-btn">View Recipe</a>  
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML += cards.join('');
+}
+
+const loading = () => {
+    return new Promise((resolve) => {
+        document.getElementById('loader').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            resolve();
+        }, 1500);
+    });
+};
+
+async function loadAndDisplay() {
+    if (loadingInProgress) return; // skip if already loading
+    if (start >= recipesData.length) return; // all data loaded
+
+    loadingInProgress = true;
+    await loading();
+    appendData(recipesData.slice(start, start + perPage));
+    start += perPage;
+    loadingInProgress = false;
+}
+
+// Initial load
+loadAndDisplay();
+
+// Infinite scroll
+window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+        loadAndDisplay();
+    }
+});
+
+    </script>
+  </body>
+</html>
