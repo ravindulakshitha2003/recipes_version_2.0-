@@ -6,7 +6,7 @@
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$id =  $_SESSION['chefno'];
+$id =  $_SESSION['user_id'];
 // Query all recipes (for simplicity, assume each recipe has a 'category' column)
 $sql = " select * from recipes where user_no =$id;";
 $result = $conn->query($sql);

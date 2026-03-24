@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - FlavorVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -22,6 +23,15 @@
             --text-secondary: #b0b0b0;
             --border-radius: 12px;
             --transition: all 0.3s ease;
+        }
+
+        /* Light Mode */
+        [data-theme="light"] {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
         }
         
         body {
@@ -355,14 +365,24 @@
     </style>
 </head>
 <body>
+    <!-- Header with Theme Toggle -->
+    <div style="padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; background-color: var(--secondary-bg);">
+        <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent);">
+            <i class="fas fa-utensils"></i> FlavorVerse
+        </div>
+        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem;">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
     <div class="container">
         <div class="register-wrapper">
             <div class="register-image">
                 <div class="image-container" id="imageContainer">
                     
                     <img src="chad-montano-eeqbbemH9-c-unsplash.jpg" alt="Gourmet Dish">
-                    <img src="joseph-gonzalez-fdlZBWIP0aM-unsplash.jpg" alt="Fresh Ingredients">
-                    <img src="chad-montano-eeqbbemH9-c-unsplash.jpg" alt="Restaurant Cuisine">
+                    <img src="https://plus.unsplash.com/premium_photo-1673580742890-4af144293960?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D alt="Gourmet Dish">
+                    <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Cuisine">
                     <img src="odiseo-castrejon-1SPu0KT-Ejg-unsplash.jpg" alt="Delicious Meal">
                 </div>
             </div>
@@ -372,11 +392,11 @@
                 
                 <div class="form-row">
                     <div class="input-group">
-                        <label for="firstName">First Name</label>
+                        <label for="firstName">user Name</label>
                         <input type="text" id="firstName" name="name" placeholder="John" required>
                     </div>
                     <div class="input-group">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName">full Name</label>
                         <input type="text" id="lastName" name="lname" placeholder="Doe" required>
                     </div>
                 </div>
@@ -402,10 +422,10 @@
                     <label for="role">Role</label>
                     <select id="role" name="role" required>
                         <option value="">Select your role</option>
-                        <option value="student">Visiter</option>
-                        <option value="professional">Professional chef</option>
+                        
+                   
                         <option value="educator">chef</option>
-                        <option value="entrepreneur">Employee</option>
+                        <option value="entrepreneur">user</option>
                         
                     </select>
                 </div>
@@ -515,5 +535,8 @@
             startAnimation();
         });
     </script>
+
+    <!-- Theme Toggle Script -->
+    <script src="theme-toggle.js"></script>
 </body>
 </html>

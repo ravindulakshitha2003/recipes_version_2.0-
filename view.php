@@ -7,7 +7,6 @@ $id = intval($_GET['id']);
     r.r_name,
     r.category,
     r.description,
-    r.cooking_step,
     r.r_picture,
     r.rating,
     r.user_no,

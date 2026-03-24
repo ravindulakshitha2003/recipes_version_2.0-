@@ -438,10 +438,7 @@ $id = intval($_GET['id']); // get ID
                 <button class="btn btn-primary" onclick="window.open('recipi.php','_self')">
                     <span>Go to Dashboard</span>
                 </button>
-                <button class="btn btn-secondary" onclick='window.open("https://t.me/testHubCommunity","_self")'>
-                  <span></span>
-                    <span><a href="https://t.me/testHubCommunity" style="text-decoration:none;color:#f5f5f5">View Logs</a></span>
-                </button>
+                
             </div>
             <div class="status-indicator">
                 <div class="dot success-dot"></div>

@@ -218,7 +218,7 @@
 
 .card-img {
   width: 100%;
-  height: 200px;
+  height: 160px;
   object-fit: cover;
 }
 
@@ -397,6 +397,9 @@
           </li>
         </ol>
         <div id="more-option" ><h1 class="mobile-menu-btn">☰</h1></div>
+        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem; margin-left: 10px;">
+            <i class="fas fa-moon"></i>
+        </button>
       </div>
     </nav>
     <!-- aimation test bar  -->
@@ -671,5 +674,8 @@ searchBar.addEventListener('input', (e) => {
     <a href="AiBot.php" class="chef-ai-btn" title="Ask AI Chef">
       <i class="fas fa-chef-hat"></i>
     </a>
+
+    <!-- Theme Toggle Script -->
+    <script src="theme-toggle.js"></script>
   </body>
 </html>

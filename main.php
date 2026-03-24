@@ -1,23 +1,14 @@
 <?php
 include_once "sql_request.php";
-session_start();
 
 $error = '';
 
-// Check for session timeout message
+// Session timeout message
 if (isset($_GET['timeout']) && $_GET['timeout'] == 1) {
-    $error = "Your session has expired after 1 minute of inactivity. Please login again.";
+    $error = "Session expired. Please login again.";
 }
 
-// Session timeout logic
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 60)) {
-    session_unset();
-    session_destroy();
-    header("Location: login.php?timeout=1");
-    exit();
-}
-$_SESSION['LAST_ACTIVITY'] = time();
-
+// Handle login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST['name']);
     $password = trim($_POST['password']);
@@ -25,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($name) || empty($password)) {
         $error = "Please enter both username and password";
     } else {
-        $stmt = $conn->prepare("SELECT user_name, password, user_no FROM users WHERE user_name = ?");
+
+        // ✅ FIXED query
+        $stmt = $conn->prepare("SELECT id, name, password FROM person WHERE name = ?");
         $stmt->bind_param("s", $name);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -33,14 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
+            // ✅ Verify password
             if (password_verify($password, $row['password'])) {
-                $_SESSION['chefno'] = $row['user_no'];
-                $_SESSION['name'] = $row['user_name'];
+
+                // ✅ Correct session values
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['LAST_ACTIVITY'] = time();
+
                 header("Location: index.php");
                 exit();
+
             } else {
-                $error ="Invalid username or password";
+                $error = "Invalid username or password";
             }
+
         } else {
             $error = "Invalid username or password";
         }
@@ -66,6 +66,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             --text-secondary: #b0b0b0;
             --border-radius: 12px;
             --transition: all 0.3s ease;
+            --border-color: #333;
+        }
+
+        /* Light Mode */
+        [data-theme="light"] {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
         }
 
         * {
@@ -275,6 +286,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
+    <!-- Header with Theme Toggle -->
+    <div style="padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background-color: var(--secondary-bg);">
+        <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent);">
+            <i class="fas fa-utensils"></i> TastyShare
+        </div>
+        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem;">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
     <div class="container">
         <div class="login-wrapper">
             <div class="login-image">
@@ -308,5 +329,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+
+    <!-- Theme Toggle Script -->
+    <script src="theme-toggle.js"></script>
 </body>
 </html>

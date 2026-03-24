@@ -646,6 +646,10 @@ $name = $_SESSION['name'];
         <div class="profile-icon">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Profile">
         </div>
+
+        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem;">
+            <i class="fas fa-moon"></i>
+        </button>
     </nav>
 
     <!-- Main Content -->
@@ -914,5 +918,8 @@ $name = $_SESSION['name'];
     </script>
     <!-- Chef AI Button -->
     <a href="AiBot.php" class="chef-ai-btn" title="Ask AI Chef">👨‍🍳</a>
+
+    <!-- Theme Toggle Script -->
+    <script src="theme-toggle.js"></script>
 </body>
 </html>

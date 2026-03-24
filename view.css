@@ -8,6 +8,16 @@
   --text-secondary: #b0b0b0;
   --success: #ff7b2c;
   --transition: all 0.3s ease;
+  --border-color: #333;
+}
+
+/* Light Mode */
+[data-theme="light"] {
+  --dark-bg: #ffffff;
+  --card-bg: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
 }
 
 /* Base styles */

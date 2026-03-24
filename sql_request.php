@@ -1,40 +1,31 @@
-<?php 
-$host = 'localhost';        // changed from InfinityFree
-$user = 'root';             // default XAMPP/WAMP user
-$password = '';             // default is empty
-$database = 'recipi';       // your local database name
-
-
-
-
-
+<?php
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$database = 'recipi';
 
 $conn = mysqli_connect($host, $user, $password, $database);
 
-// Check if connection failed
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Start session
-session_start();
+// Start session ONLY once
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Session timeout (60 seconds = 1 minute)
-$timeout_duration = 600;
+// Timeout (10 minutes)
+$timeout_duration = 60000;
 
-// Check if session has expired
 if (isset($_SESSION['LAST_ACTIVITY'])) {
-    $elapsed_time = time() - $_SESSION['LAST_ACTIVITY'];
-    
-    if ($elapsed_time > $timeout_duration) {
-        // Session expired - destroy it
+    if ((time() - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
         session_unset();
         session_destroy();
-        
-        // Redirect to login with message
-       
+        header("Location: login.php?timeout=1");
         exit();
     }
 }
 
+$_SESSION['LAST_ACTIVITY'] = time();
 ?>

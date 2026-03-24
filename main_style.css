@@ -14,6 +14,18 @@
   --text-secondary: #b0b0b0;
   --border-radius: 12px;
   --transition: all 0.3s ease;
+  --border-color: #333;
+}
+
+/* Light Mode */
+[data-theme="light"] {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --accent: #ff7b2c;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
 }
 
 body {
@@ -35,7 +47,8 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -173,7 +186,7 @@ nav a.active {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: var(--transition);
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .recipe-card:hover {
@@ -246,7 +259,7 @@ footer {
   color: var(--text-primary);
   padding: 40px 0 20px;
   text-align: center;
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -287,7 +300,7 @@ footer {
 .copyright {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #333;
+  border-top: 1px solid var(--border-color);
   color: var(--text-secondary);
 }
 
@@ -331,7 +344,7 @@ footer {
   border-radius: var(--border-radius);
   z-index: 1;
   background: var(--card-bg);
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .desc {
@@ -381,7 +394,7 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: var(--transition);
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .feature-box:hover {
@@ -508,6 +521,27 @@ footer {
   cursor: pointer;
 }
 
+/* Theme Toggle Button */
+#theme-toggle-btn {
+  background: none;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  font-size: 1.2rem;
+}
+
+#theme-toggle-btn:hover {
+  background: rgba(255, 123, 44, 0.1);
+  transform: scale(1.1);
+}
+
 .particles-container {
   position: relative;
   width: 100%;
@@ -616,7 +650,7 @@ footer {
     flex-direction: column;
     padding: 20px;
     gap: 1rem;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
   }
 
   nav ul.show {

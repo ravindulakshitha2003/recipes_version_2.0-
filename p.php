@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +14,24 @@
         }
 
         :root {
-            --dark-bg:#121212;
+            --dark-bg: #121212;
             --card-bg: #252525;
-            --accent: #ff7b2c;;
-            --accent-hover:  #ff7b2c;
-            --text-primary:  #f5f5f5;
+            --accent: #ff7b2c;
+            --accent-hover: #ff7b2c;
+            --text-primary: #f5f5f5;
             --text-secondary: #b0b0b0;
             --success: #ff7b2c;
             --transition: all 0.3s ease;
         }
+
+        /* Light Mode */
+        [data-theme="light"] {
+            --dark-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+        }
+
         body {
             background-color: var(--dark-bg);
             color: var(--text-primary);
@@ -101,7 +108,7 @@
             gap: 1.2rem;
             order: 2;
             margin: 0px 20px;
-            transition:display  0.3s linear;
+            transition: display 0.3s linear;
         }
 
         .nav-btn {
@@ -116,7 +123,7 @@
         }
 
         .nav-btn:hover, .nav-btn.active {
-            border-bottom:2px solid   #ff7b2c;
+            border-bottom: 2px solid #ff7b2c;
         }
 
         .user-section {
@@ -145,7 +152,6 @@
             transform: scale(1.05);
         }
 
-        /* Mobile menu button */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -210,17 +216,16 @@
             width: 100%;
             padding: 1rem;
             border-radius: 10px;
-            border: 1px solid  #121212;
+            border: 1px solid #121212;
             background-color: #121212;
-            color:white;
+            color: white;
             font-size: 1rem;
             transition: all 0.3s;
         }
 
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
-          
-            box-shadow: 0 0 0 2px  #ff7b2c;
+            box-shadow: 0 0 0 2px #ff7b2c;
         }
 
         .form-textarea {
@@ -228,31 +233,68 @@
             resize: vertical;
         }
 
-        /* Ingredients List */
+        /* ── INGREDIENTS ── */
         .ingredients-list {
             margin-top: 0.5rem;
         }
 
         .ingredient-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             background-color: #121212;
-            padding: 0.8rem;
-            border-radius: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: slideIn 0.2s ease;
+            border: 1px solid #2a2a2a;
         }
 
-        .ingredient-item input {
+        /* Top row: name + remove */
+        .ingredient-main-row {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 0.8rem;
+            gap: 0.5rem;
+            cursor: pointer;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .ingredient-main-row input[name="ingredients[]"] {
             flex: 1;
             background: transparent;
             border: none;
             color: var(--text-primary);
             font-size: 1rem;
-            padding: 0.5rem;
+            padding: 0.3rem 0.5rem;
         }
 
-        .ingredient-item input:focus {
+        .ingredient-main-row input[name="ingredients[]"]:focus {
             outline: none;
+        }
+
+        .ingredient-toggle {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .ingredient-toggle:hover {
+            background: rgba(255, 123, 44, 0.1);
+        }
+
+        .ingredient-toggle i {
+            transition: transform 0.25s;
+        }
+
+        .ingredient-toggle.open i {
+            transform: rotate(180deg);
         }
 
         .remove-ingredient {
@@ -260,7 +302,7 @@
             border: none;
             color: #ff5252;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             padding: 0.3rem;
             border-radius: 4px;
             transition: background-color 0.3s;
@@ -270,32 +312,189 @@
             background-color: rgba(255, 82, 82, 0.1);
         }
 
+        /* Expandable nutrition panel */
+        .ingredient-details {
+            display: none;
+            padding: 0.9rem 0.8rem;
+            background: #161616;
+        }
+
+        .ingredient-details.open {
+            display: block;
+        }
+
+        .ingredient-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .ingredient-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .ingredient-field label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        .ingredient-field input,
+        .ingredient-field select {
+            background: #1e1e1e;
+            border: 1px solid #2e2e2e;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            padding: 0.45rem 0.6rem;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .ingredient-field input:focus,
+        .ingredient-field select:focus {
+            border-color: var(--accent);
+        }
+
+        .ingredient-field select option {
+            background: #1e1e1e;
+        }
+
+        .ingredient-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* nutrition macro chips row */
+        .macro-label {
+            font-size: 0.68rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0.6rem 0 0.4rem;
+            grid-column: 1 / -1;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 0.6rem;
+        }
+
         .add-ingredient {
-            background:  #ff7b2c;
+            background: #ff7b2c;
             border: none;
-            color:#121212;
+            color: #121212;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             font-size: 1rem;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            transition: background-color 0.3s;
+            transition: box-shadow 0.3s;
             margin-top: 0.5rem;
             font-weight: 500;
         }
 
         .add-ingredient:hover {
-            box-shadow: 0px 0px 10px  #ff7b2c;;
+            box-shadow: 0px 0px 10px #ff7b2c;
         }
 
         .add-ingredient i {
             margin-right: 0.5rem;
         }
 
+        /* ── COOKING STEPS ── */
+        .steps-list {
+            margin-top: 0.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            background-color: #121212;
+            padding: 0.8rem;
+            border-radius: 8px;
+            gap: 0.6rem;
+            animation: slideIn 0.2s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-number {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: #121212;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-item input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+
+        .step-item input:focus {
+            outline: none;
+        }
+
+        .remove-step {
+            background: none;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.3rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .remove-step:hover {
+            background-color: rgba(255, 82, 82, 0.1);
+        }
+
+        .add-step {
+            background: var(--accent);
+            border: none;
+            color: #121212;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: box-shadow 0.3s;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .add-step:hover {
+            box-shadow: 0px 0px 10px var(--accent);
+        }
+
+        .add-step i {
+            margin-right: 0.5rem;
+        }
+
         /* Image Upload */
         .image-upload {
-            border: 2px dashed   #ff7b2c;;
+            border: 2px dashed #ff7b2c;
             border-radius: 10px;
             padding: 2rem;
             text-align: center;
@@ -360,13 +559,13 @@
             font-size: 1.1rem;
             transition: all 0.3s;
             margin-top: 1rem;
-            box-shadow: 0 4px 15px   white;;
+            box-shadow: 0 4px 15px white;
         }
 
         .submit-button:hover {
             background-color: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px   #ff7b2c;;
+            box-shadow: 0 6px 20px #ff7b2c;
         }
 
         .submit-button:active {
@@ -419,7 +618,7 @@
         .preview-title {
             font-size: 1.6rem;
             margin-bottom: 0.8rem;
-            color:   #ff7b2c;;
+            color: #ff7b2c;
         }
 
         .preview-description {
@@ -432,7 +631,7 @@
             display: flex;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
-            color:white;
+            color: white;
             font-size: 0.9rem;
         }
 
@@ -503,7 +702,7 @@
         }
 
         .social-icons a:hover {
-            color:white;
+            color: white;
         }
 
         .footer-links {
@@ -515,7 +714,7 @@
         }
 
         .footer-links a {
-            color:white;
+            color: white;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -528,12 +727,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        .preview-section-title .preview-title{
-            color: #ff7b2c;
-        }
-        .preview-description .preview-meta{
-            color: white;
-        }
 
         /* Mobile Responsive Styles */
         @media only screen and (max-width: 768px) {
@@ -542,18 +735,18 @@
                 flex-wrap: wrap;
                 padding: 0.51rem;
             }
-            
+
             .logo {
                 font-size: 1.5rem;
                 margin-bottom: 0;
             }
-            
+
             .search-bar {
                 order: 3;
                 margin: 0.5rem 0 0 0;
                 min-width: 100%;
             }
-            
+
             .nav-buttons {
                 display: none;
                 flex-direction: column;
@@ -565,36 +758,36 @@
                 padding: 1rem;
                 box-shadow: 0 5px 10px rgba(0,0,0,0.1);
             }
-            
+
             .nav-buttons.active {
                 display: flex;
             }
-            
+
             .nav-btn {
                 padding: 0.8rem;
                 text-align: center;
                 width: 100%;
             }
-            
+
             .mobile-menu-btn {
                 display: block;
                 order: 2;
             }
-            
+
             .user-section {
                 order: 1;
             }
-            
+
             .profile-pic {
                 width: 36px;
                 height: 36px;
                 font-size: 0.9rem;
             }
-            
+
             .section-title {
                 font-size: 1.5rem;
             }
-            
+
             .preview-image {
                 height: 200px;
             }
@@ -605,27 +798,27 @@
                 margin: 1rem auto;
                 padding: 0 0.5rem;
             }
-            
+
             .form-card, .preview-card {
                 padding: 1rem;
             }
-            
+
             .form-input, .form-textarea, .form-select {
                 padding: 0.8rem;
             }
-            
+
             .preview-title {
                 font-size: 1.4rem;
             }
-            
+
             .preview-section-title {
                 font-size: 1.1rem;
             }
-            
+
             .image-upload {
                 padding: 1rem;
             }
-            
+
             .upload-icon {
                 font-size: 2.5rem;
             }
@@ -633,39 +826,39 @@
 
         /* Chef AI Button */
         .chef-ai-btn {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          width: 60px;
-          height: 60px;
-          background: linear-gradient(45deg, #ff7b2c, #eeff02);
-          border: none;
-          border-radius: 50%;
-          cursor: pointer;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-          transition: all 0.3s ease;
-          z-index: 1000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 24px;
-          color: #1e1e1e;
-          text-decoration: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff7b2c, #eeff02);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #1e1e1e;
+            text-decoration: none;
         }
 
         .chef-ai-btn:hover {
-          transform: scale(1.1);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         @media (max-width: 768px) {
-          .chef-ai-btn {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            bottom: 15px;
-            right: 15px;
-          }
+            .chef-ai-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 15px;
+                right: 15px;
+            }
         }
     </style>
 </head>
@@ -676,26 +869,19 @@
             <i class="fas fa-utensils"></i>
             <span>FlavorVerse</span>
         </a>
-        
+
         <button class="mobile-menu-btn">
             <i class="fas fa-bars"></i>
         </button>
-        
+
         <div class="nav-buttons" id="nav-buttons">
-            <button class="nav-btn active">Home</button>
-            <button class="nav-btn">Categories</button>
-            
-            <button class="nav-btn">Saved</button>
-        </div>
+            <button class="nav-btn active"><a href="index.php" style="text-decoration: none;color: white;">Home</a></button>
         
-        <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search for recipes...">
         </div>
-        
-        <div class="user-section">
-            <div class="profile-pic">JS</div>
-        </div>
+
+        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem; margin-left: 10px;">
+            <i class="fas fa-moon"></i>
+        </button>
     </nav>
 
     <!-- Main Content -->
@@ -703,52 +889,116 @@
         <!-- Form Section -->
         <form method="post" action="create_data.php">
             <h2 class="section-title">Upload Your Recipe</h2>
-            
+
             <div class="form-card">
                 <div class="form-group">
                     <label for="recipe-title" class="form-label">Recipe Title</label>
                     <input type="text" name="title" id="recipe-title" class="form-input" placeholder="e.g., Creamy Garlic Pasta">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="recipe-description" class="form-label">Short Description</label>
                     <textarea id="recipe-description" name="decs" class="form-textarea" placeholder="Describe your recipe in a few sentences..."></textarea>
                 </div>
-                
+
+                <!-- Ingredients -->
                 <div class="form-group">
                     <label class="form-label">Ingredients</label>
                     <div class="ingredients-list" id="ingredients-container">
                         <div class="ingredient-item">
-                            <input type="text" name="ingredients[]" placeholder="Add ingredient (e.g., 2 cups flour)">
-                            <button class="remove-ingredient">
-                                <i class="fas fa-times"></i>
-                            </button>
+                            <div class="ingredient-main-row">
+                                <input type="text" name="ingredients[]" placeholder="Ingredient name (e.g., Flour)">
+                                <button type="button" class="ingredient-toggle" title="Nutrition details">
+                                    Details <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <button type="button" class="remove-ingredient">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="ingredient-details">
+                                <div class="ingredient-grid">
+                                    <div class="ingredient-field">
+                                        <label>Quantity</label>
+                                        <input type="text" name="quantity[]" placeholder="e.g. 2">
+                                    </div>
+                                    <div class="ingredient-field">
+                                        <label>Unit</label>
+                                        <select name="unit[]">
+                                            <option value="">Select unit</option>
+                                            <option>cup</option>
+                                            <option>tbsp</option>
+                                            <option>tsp</option>
+                                            <option>g</option>
+                                            <option>kg</option>
+                                            <option>ml</option>
+                                            <option>l</option>
+                                            <option>oz</option>
+                                            <option>lb</option>
+                                            <option>piece</option>
+                                            <option>slice</option>
+                                            <option>pinch</option>
+                                        </select>
+                                    </div>
+                                    <div class="ingredient-field full-width">
+                                        <label>Clarity / Notes</label>
+                                        <input type="text" name="clarity[]" placeholder="e.g. finely chopped, room temp">
+                                    </div>
+                                    <div class="macro-label">Nutrition (per serving)</div>
+                                    <div class="ingredient-field">
+                                        <label>Calories</label>
+                                        <input type="number" name="calories[]" placeholder="kcal" min="0" step="0.01">
+                                    </div>
+                                    <div class="ingredient-field">
+                                        <label>Carbohydrates (g)</label>
+                                        <input type="number" name="carbohydrates[]" placeholder="g" min="0" step="0.01">
+                                    </div>
+                                    <div class="ingredient-field">
+                                        <label>Protein (g)</label>
+                                        <input type="number" name="protein[]" placeholder="g" min="0" step="0.01">
+                                    </div>
+                                    <div class="ingredient-field">
+                                        <label>Fat (g)</label>
+                                        <input type="number" name="fat[]" placeholder="g" min="0" step="0.01">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button class="add-ingredient" type="button" id="add-ingredient">
                         <i class="fas fa-plus"></i> Add Ingredient
                     </button>
-                    
                 </div>
-                
+
+                <!-- Cooking Steps -->
                 <div class="form-group">
-                    <label for="cooking-steps" class="form-label">Cooking Steps</label>
-                    <textarea id="cooking-steps" name="step" class="form-textarea" placeholder="Describe each step in detail..."></textarea>
+                    <label class="form-label">Cooking Steps</label>
+                    <div class="steps-list" id="steps-container">
+                        <div class="step-item">
+                            <span class="step-number">1</span>
+                            <input type="text" name="steps[]" placeholder="Describe this step...">
+                            <button type="button" class="remove-step">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="add-step" type="button" id="add-step">
+                        <i class="fas fa-plus"></i> Add Step
+                    </button>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="recipe-category" class="form-label">Category</label>
                     <select id="recipe-category" name="category" class="form-select">
                         <option value="">Select a category</option>
-                        <option value="dessert">dessert</option>
-                        <option value="main">main Dish</option>
-                        <option value="appetizer">appetizer</option>
-                        <option value="salad">salad</option>
-                        <option value="soup">soup</option>
-                        <option value="drink">drink</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="main">Main Dish</option>
+                        <option value="appetizer">Appetizer</option>
+                        <option value="salad">Salad</option>
+                        <option value="soup">Soup</option>
+                        <option value="drink">Drink</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label">Recipe Image</label>
                     <div class="image-upload" id="image-upload-area">
@@ -761,38 +1011,39 @@
                         <p id="file-name"></p>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="recipe-title" class="form-label">link image</label>
+                    <label for="image-link" class="form-label">Link Image</label>
                     <input type="text" name="imagelink" id="image-link" class="form-input" placeholder="www.image.jpg">
                 </div>
-                
+
                 <button class="submit-button" type="submit">Submit Recipe</button>
             </div>
         </form>
-        
+
         <!-- Preview Section -->
         <section>
             <h2 class="section-title">Recipe Preview</h2>
-            
+
             <div class="preview-card">
                 <div class="preview-image" id="preview-image">
                     <span>Image preview will appear here</span>
                 </div>
-                
+
                 <h3 class="preview-title" id="preview-title">Recipe Title</h3>
                 <p class="preview-description" id="preview-description">Recipe description will appear here...</p>
-                
+
                 <div class="preview-meta">
                     <span id="preview-category">Category: Not selected</span>
                 </div>
-                
+
                 <div class="preview-section">
                     <h4 class="preview-section-title">Ingredients</h4>
                     <ul class="preview-ingredients" id="preview-ingredients">
                         <li>Ingredients will appear here</li>
                     </ul>
                 </div>
-                
+
                 <div class="preview-section">
                     <h4 class="preview-section-title">Cooking Steps</h4>
                     <ol class="preview-steps" id="preview-steps">
@@ -812,260 +1063,297 @@
                 <a href="#"><i class="fab fa-pinterest"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
             </div>
-            
+
             <div class="footer-links">
                 <a href="#">About Us</a>
                 <a href="#">Contact</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
             </div>
-            
+
             <p class="copyright">© 2023 FlavorVerse. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // DOM Elements
-        const recipeTitle = document.getElementById('recipe-title');
-        const recipeDescription = document.getElementById('recipe-description');
-        const cookingSteps = document.getElementById('cooking-steps');
-        const recipeCategory = document.getElementById('recipe-category');
-        const imageUploadArea = document.getElementById('image-upload-area');
-        const imageUpload = document.getElementById('image-upload');
-        const fileName = document.getElementById('file-name');
-        const addIngredientBtn = document.getElementById('add-ingredient');
+        // ── DOM Elements ──
+        const recipeTitle        = document.getElementById('recipe-title');
+        const recipeDescription  = document.getElementById('recipe-description');
+        const recipeCategory     = document.getElementById('recipe-category');
+        const imageUploadArea    = document.getElementById('image-upload-area');
+        const imageUpload        = document.getElementById('image-upload');
+        const fileName           = document.getElementById('file-name');
+        const addIngredientBtn   = document.getElementById('add-ingredient');
         const ingredientsContainer = document.getElementById('ingredients-container');
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navButtons = document.getElementById('nav-buttons');
-        const imge_link = document.getElementById('image-link');
-        // Preview Elements
-        const previewTitle = document.getElementById('preview-title');
+        const addStepBtn         = document.getElementById('add-step');
+        const stepsContainer     = document.getElementById('steps-container');
+        const mobileMenuBtn      = document.querySelector('.mobile-menu-btn');
+        const navButtons         = document.getElementById('nav-buttons');
+        const imageLink          = document.getElementById('image-link');
+
+        // ── Preview Elements ──
+        const previewTitle       = document.getElementById('preview-title');
         const previewDescription = document.getElementById('preview-description');
-        const previewCategory = document.getElementById('preview-category');
-        const previewImage = document.getElementById('preview-image');
+        const previewCategory    = document.getElementById('preview-category');
+        const previewImage       = document.getElementById('preview-image');
         const previewIngredients = document.getElementById('preview-ingredients');
-        const previewSteps = document.getElementById('preview-steps');
-        
+        const previewSteps       = document.getElementById('preview-steps');
 
-    imge_link.addEventListener('change', function(e) {
-    const url = e.target.value; // get the URL typed by user
-    previewImage.style.backgroundImage = `url('${url}')`;
-    previewImage.style.backgroundSize = 'cover';  // fit image inside div
-    previewImage.style.backgroundRepeat = 'no-repeat';
-    previewImage.style.backgroundPosition = 'center';
-});
-
-
-
-        // Mobile menu toggle
+        // ── Mobile Menu ──
         mobileMenuBtn.addEventListener('click', () => {
             navButtons.classList.toggle('active');
         });
-        
-        // Close mobile menu when clicking outside
+
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.navbar') && navButtons.classList.contains('active')) {
                 navButtons.classList.remove('active');
             }
         });
-        
-        // Add ingredient functionality
+
+        // ── Ingredients ──
+        function ingredientCardHTML() {
+            return `
+                <div class="ingredient-main-row">
+                    <input type="text" name="ingredients[]" placeholder="Ingredient name (e.g., Flour)">
+                    <button type="button" class="ingredient-toggle" title="Nutrition details">
+                        Details <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <button type="button" class="remove-ingredient">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="ingredient-details">
+                    <div class="ingredient-grid">
+                        <div class="ingredient-field">
+                            <label>Quantity</label>
+                            <input type="text" name="quantity[]" placeholder="e.g. 2">
+                        </div>
+                        <div class="ingredient-field">
+                            <label>Unit</label>
+                            <select name="unit[]">
+                                <option value="">Select unit</option>
+                                <option>cup</option>
+                                <option>tbsp</option>
+                                <option>tsp</option>
+                                <option>g</option>
+                                <option>kg</option>
+                                <option>ml</option>
+                                <option>l</option>
+                                <option>oz</option>
+                                <option>lb</option>
+                                <option>piece</option>
+                                <option>slice</option>
+                                <option>pinch</option>
+                            </select>
+                        </div>
+                        <div class="ingredient-field full-width">
+                            <label>Clarity / Notes</label>
+                            <input type="text" name="clarity[]" placeholder="e.g. finely chopped, room temp">
+                        </div>
+                        <div class="macro-label">Nutrition (per serving)</div>
+                        <div class="ingredient-field">
+                            <label>Calories</label>
+                            <input type="number" name="calories[]" placeholder="kcal" min="0" step="0.01">
+                        </div>
+                        <div class="ingredient-field">
+                            <label>Carbohydrates (g)</label>
+                            <input type="number" name="carbohydrates[]" placeholder="g" min="0" step="0.01">
+                        </div>
+                        <div class="ingredient-field">
+                            <label>Protein (g)</label>
+                            <input type="number" name="protein[]" placeholder="g" min="0" step="0.01">
+                        </div>
+                        <div class="ingredient-field">
+                            <label>Fat (g)</label>
+                            <input type="number" name="fat[]" placeholder="g" min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function bindIngredientEvents(item) {
+            // Toggle details panel
+            const toggleBtn = item.querySelector('.ingredient-toggle');
+            const detailsPanel = item.querySelector('.ingredient-details');
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = detailsPanel.classList.toggle('open');
+                toggleBtn.classList.toggle('open', isOpen);
+            });
+
+            // Remove
+            item.querySelector('.remove-ingredient').addEventListener('click', () => {
+                item.remove();
+                updateIngredientsPreview();
+            });
+
+            // Live preview on name input
+            item.querySelector('input[name="ingredients[]"]').addEventListener('input', updateIngredientsPreview);
+        }
+
+        // Bind events to the first ingredient already in HTML
+        bindIngredientEvents(document.querySelector('.ingredient-item'));
+
         addIngredientBtn.addEventListener('click', () => {
             const ingredientItem = document.createElement('div');
             ingredientItem.className = 'ingredient-item';
-            ingredientItem.innerHTML = `
-                <input type="text" name="ingredients[]" placeholder="Add ingredient (e.g., 2 cups flour)">
-                <button type="button" class="remove-ingredient" >
+            ingredientItem.innerHTML = ingredientCardHTML();
+            ingredientsContainer.appendChild(ingredientItem);
+            bindIngredientEvents(ingredientItem);
+            // Auto-open details on new card
+            ingredientItem.querySelector('.ingredient-details').classList.add('open');
+            ingredientItem.querySelector('.ingredient-toggle').classList.add('open');
+        });
+
+        function updateIngredientsPreview() {
+            const ingredients = [];
+            document.querySelectorAll('.ingredient-item input[name="ingredients[]"]').forEach(input => {
+                if (input.value.trim() !== '') ingredients.push(input.value);
+            });
+
+            previewIngredients.innerHTML = ingredients.length > 0
+                ? ingredients.map(i => `<li>${i}</li>`).join('')
+                : '<li>Ingredients will appear here</li>';
+        }
+
+        // ── Cooking Steps ──
+        function updateStepNumbers() {
+            stepsContainer.querySelectorAll('.step-item').forEach((step, index) => {
+                step.querySelector('.step-number').textContent = index + 1;
+            });
+        }
+
+        function updateStepsPreview() {
+            const steps = [];
+            stepsContainer.querySelectorAll('.step-item input').forEach(input => {
+                if (input.value.trim() !== '') steps.push(input.value);
+            });
+
+            previewSteps.innerHTML = steps.length > 0
+                ? steps.map(s => `<li>${s}</li>`).join('')
+                : '<li>Cooking steps will appear here</li>';
+        }
+
+        // Remove button for the first step (already in HTML)
+        document.querySelector('.step-item .remove-step').addEventListener('click', function () {
+            this.closest('.step-item').remove();
+            updateStepNumbers();
+            updateStepsPreview();
+        });
+
+        // First step input live preview
+        document.querySelector('.step-item input').addEventListener('input', updateStepsPreview);
+
+        addStepBtn.addEventListener('click', () => {
+            const stepItem = document.createElement('div');
+            stepItem.className = 'step-item';
+            stepItem.innerHTML = `
+                <span class="step-number"></span>
+                <input type="text" name="steps[]" placeholder="Describe this step...">
+                <button type="button" class="remove-step">
                     <i class="fas fa-times"></i>
                 </button>
             `;
-            
-            ingredientsContainer.appendChild(ingredientItem);
-            
-            // Add event to remove button
-            const removeBtn = ingredientItem.querySelector('.remove-ingredient');
-            removeBtn.addEventListener('click', () => {
-                ingredientItem.remove();
-                updateIngredientsPreview();
+            stepsContainer.appendChild(stepItem);
+            updateStepNumbers();
+
+            stepItem.querySelector('.remove-step').addEventListener('click', () => {
+                stepItem.remove();
+                updateStepNumbers();
+                updateStepsPreview();
             });
-            
-            // Add event to input for live update
-            const input = ingredientItem.querySelector('input');
-            input.addEventListener('input', updateIngredientsPreview);
+
+            stepItem.querySelector('input').addEventListener('input', updateStepsPreview);
         });
-        
-        // Remove ingredient buttons functionality
-        document.querySelectorAll('.remove-ingredient').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.parentElement.remove();
-                updateIngredientsPreview();
-            });
+
+        // ── Image Link Preview ──
+        imageLink.addEventListener('input', function () {
+            const url = this.value.trim();
+            if (url) {
+                previewImage.style.backgroundImage = `url('${url}')`;
+                previewImage.style.backgroundSize = 'cover';
+                previewImage.style.backgroundRepeat = 'no-repeat';
+                previewImage.style.backgroundPosition = 'center';
+                previewImage.innerHTML = '';
+            } else {
+                previewImage.style.backgroundImage = '';
+                previewImage.innerHTML = '<span>Image preview will appear here</span>';
+            }
         });
-        
-        // Image upload functionality
-        imageUploadArea.addEventListener('click', () => {
-            imageUpload.click();
+
+        // ── Image File Upload ──
+        imageUploadArea.addEventListener('click', () => imageUpload.click());
+
+        imageUpload.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                fileName.textContent = this.files[0].name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.innerHTML = `<img src="${e.target.result}" alt="Recipe preview">`;
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
         });
-        
 
-
-
-
-        // imageUpload.addEventListener('change', function() {
-        //     if (this.files && this.files[0]) {
-        //         fileName.textContent = this.files[0].name;
-                
-        //         const reader = new FileReader();
-        //         reader.onload = function(e) {
-        //             previewImage.innerHTML = `<img src="${e.target.result}" alt="Recipe preview">`;
-        //         };
-        //         reader.readAsDataURL(this.files[0]);
-        //     }
-        // });
-        
-        // Drag and drop for image upload
-        imageUploadArea.addEventListener('dragover', function(e) {
+        imageUploadArea.addEventListener('dragover', function (e) {
             e.preventDefault();
             this.style.borderColor = 'var(--accent)';
             this.style.backgroundColor = 'rgba(255, 123, 54, 0.1)';
         });
-        
-        imageUploadArea.addEventListener('dragleave', function() {
-            this.style.borderColor = '#3a3a3a';
+
+        imageUploadArea.addEventListener('dragleave', function () {
+            this.style.borderColor = '#ff7b2c';
             this.style.backgroundColor = 'transparent';
         });
-        
-        imageUploadArea.addEventListener('drop', function(e) {
+
+        imageUploadArea.addEventListener('drop', function (e) {
             e.preventDefault();
-            this.style.borderColor = '#3a3a3a';
+            this.style.borderColor = '#ff7b2c';
             this.style.backgroundColor = 'transparent';
-            
+
             if (e.dataTransfer.files && e.dataTransfer.files[0]) {
                 imageUpload.files = e.dataTransfer.files;
                 fileName.textContent = e.dataTransfer.files[0].name;
-                
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     previewImage.innerHTML = `<img src="${e.target.result}" alt="Recipe preview">`;
                 };
                 reader.readAsDataURL(e.dataTransfer.files[0]);
             }
         });
-        
-        // Live preview updates
-        recipeTitle.addEventListener('input', function() {
+
+        // ── Live Preview Updates ──
+        recipeTitle.addEventListener('input', function () {
             previewTitle.textContent = this.value || 'Recipe Title';
         });
-        
-        recipeDescription.addEventListener('input', function() {
+
+        recipeDescription.addEventListener('input', function () {
             previewDescription.textContent = this.value || 'Recipe description will appear here...';
         });
-        
-        cookingSteps.addEventListener('input', function() {
-            const steps = this.value.split('\n').filter(step => step.trim() !== '');
-            
-            if (steps.length > 0) {
-                previewSteps.innerHTML = steps.map(step => `<li>${step}</li>`).join('');
-            } else {
-                previewSteps.innerHTML = '<li>Cooking steps will appear here</li>';
-            }
+
+        recipeCategory.addEventListener('change', function () {
+            previewCategory.textContent = this.value
+                ? `Category: ${this.options[this.selectedIndex].text}`
+                : 'Category: Not selected';
         });
-        
-        recipeCategory.addEventListener('change', function() {
-            if (this.value) {
-                previewCategory.textContent = `Category: ${this.options[this.selectedIndex].text}`;
-            } else {
-                previewCategory.textContent = 'Category: Not selected';
-            }
-        });
-        
-        // Update ingredients preview
-        function updateIngredientsPreview() {
-            const ingredients = [];
-            document.querySelectorAll('.ingredient-item input').forEach(input => {
-                if (input.value.trim() !== '') {
-                    ingredients.push(input.value);
-                }
-            });
-            
-            if (ingredients.length > 0) {
-                previewIngredients.innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
-            } else {
-                previewIngredients.innerHTML = '<li>Ingredients will appear here</li>';
-            }
-        }
-        
-        // Initialize ingredients input events
-        document.querySelectorAll('.ingredient-item input').forEach(input => {
-            input.addEventListener('input', updateIngredientsPreview);
-        });
-        
-        // Submit button functionality
-       /* document.querySelector('.submit-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Basic validation
-            if (!recipeTitle.value.trim()) {
-                alert('Please enter a recipe title');
-                recipeTitle.focus();
-                return;
-            }
-            
-            if (!recipeDescription.value.trim()) {
-                alert('Please enter a recipe description');
-                recipeDescription.focus();
-                return;
-            }
-            
-            const ingredients = [];
-            document.querySelectorAll('.ingredient-item input').forEach(input => {
-                if (input.value.trim() !== '') {
-                    ingredients.push(input.value);
-                }
-            });
-            
-            if (ingredients.length === 0) {
-                alert('Please add at least one ingredient');
-                return;
-            }
-            
-            if (!cookingSteps.value.trim()) {
-                alert('Please enter cooking steps');
-                cookingSteps.focus();
-                return;
-            }
-            
-            if (!recipeCategory.value) {
-                alert('Please select a category');
-                recipeCategory.focus();
-                return;
-            }
-            
-            if (!imageUpload.files || !imageUpload.files[0]) {
-                alert('Please upload an image for your recipe');
-                return;
-            }
-            
-            // If all validation passes
-            alert('Recipe submitted successfully!');
-            // Here you would typically send the data to a server
-        });*/
+
+        // ── Session Check ──
         function loading() {
             fetch('check_session.php')
                 .then(response => response.json())
                 .then(data => {
                     if (!data.active) {
-                        window.open('main.php','_self');
-                    }
-                    else{
-
-                         
+                        window.open('main.php', '_self');
                     }
                 });
         }
-        window.addEventListener('load',loading)
+        window.addEventListener('load', loading);
     </script>
+
     <!-- Chef AI Button -->
     <a href="AiBot.php" class="chef-ai-btn" title="Ask AI Chef">👨‍🍳</a>
+
+    <!-- Theme Toggle Script -->
+    <script src="theme-toggle.js"></script>
 </body>
 </html>
