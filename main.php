@@ -287,14 +287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <!-- Header with Theme Toggle -->
-    <div style="padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background-color: var(--secondary-bg);">
-        <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent);">
-            <i class="fas fa-utensils"></i> TastyShare
-        </div>
-        <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" style="background: none; border: 2px solid var(--accent); color: var(--accent); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1.2rem;">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
+    
 
     <div class="container">
         <div class="login-wrapper">

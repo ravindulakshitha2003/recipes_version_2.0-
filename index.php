@@ -299,7 +299,7 @@ if (!isset($_SESSION['name'])) {
                     <p>Creating delicious moments for food lovers everywhere.</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact Us</h3>
+                    <h3><a href="community.php" style="text-decoration: none;"> Contact Admin</a></h3>
                     <p>123 Recipe Street, New York</p>
                     <p>info@tastyshare.com</p>
                     <p>+1 (234) 567-8901</p>
