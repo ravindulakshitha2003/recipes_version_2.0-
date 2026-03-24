@@ -696,28 +696,13 @@
             
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-image" style="background-image: url('https://scontent.fcmb3-2.fna.fbcdn.net/v/t39.30808-6/474811551_1056479286249220_156293047826719515_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHBydm4RUU7bpca1Y4nh0Le1rvhVn2Fqu3Wu-FWfYWq7QLv_BlhU3u6JUsdbSEcDHRqq31Ct0nJu1b2aD5VjmZx&_nc_ohc=aqTmNqRusXcQ7kNvwEcqI4X&_nc_oc=AdkkYMp6JUTx0zz3XOygtPP1GB4SzBDTVYmQjAYoJEAPQZnc0UmOvcFt1ijQHXzW6ft6JeB4xzTvP9PmH967bZF4&_nc_zt=23&_nc_ht=scontent.fcmb3-2.fna&_nc_gid=k3u0y8u5-oFP2kcarS8xtA&oh=00_AfiOk3p6RQJ76iub6sPzEVYXUZ40VpRZ5fVOpZyiglLf5A&oe=691EAA28');"></div>
+                    <div class="member-image" style="background-image: url('ravindu.png');"></div>
                     <div class="member-info">
                         <h3>Ravindu lakshitha</h3>
                         <p>Founder & CEO</p>
                     </div>
                 </div>
                 
-                <div class="team-member">
-                    <div class="member-image" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');"></div>
-                    <div class="member-info">
-                        <h3>Maria Rodriguez</h3>
-                        <p>Head of Product</p>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="member-image" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');"></div>
-                    <div class="member-info">
-                        <h3>David Chen</h3>
-                        <p>Lead Developer</p>
-                    </div>
-                </div>
             </div>
             
             <div class="section-header" style="margin-top: 60px;">
@@ -829,7 +814,7 @@
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Contact Us</h3>
+                    <h3><a href="loginerror.php"> Contact Usa</a></h3>
                     <ul class="footer-links">
                         <li><i class="fas fa-envelope"></i> hello@tastehub.com</li>
                         <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
